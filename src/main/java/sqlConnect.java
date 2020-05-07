@@ -26,16 +26,14 @@ public class sqlConnect {
             queries[6]= "SELECT MAX(Amount) FROM public.Payments";
 
 
-            for (String s : queries) { // loop for every single query to print them in order
+            for (int i =0; i< queries.length; i++) { // loop for every single query to print them in order
 
-                ResultSet resultSet = statement.executeQuery(s);
+                ResultSet resultSet = statement.executeQuery(queries[i]);
 
                 while (resultSet.next()) { // result set of each query
 
 
-                    for (String query : queries) {
-
-                        if (query.contains("*")) {
+                    if (i ==0 ) {
 
                             System.out.println(
                                     resultSet.getString("customerid") + "\t"
@@ -48,30 +46,33 @@ public class sqlConnect {
                                             + resultSet.getString("city") + "\t"
                                             + resultSet.getString("country"));
 
-                        } else if (query.length() == 38) {
+                        } else if(i ==1) {
 
                             System.out.println(resultSet.getString("Firstname"));
 
-                        } else if (query.matches("[CustomerID=1]")) {
+                        } else if(i==2) {
 
                             System.out.println(resultSet.getString("Firstname"));
 
-                        } else if (query.matches("[UPDATE]")) {
+                        } else if (i==3) {
 
-                            jdbcTemplateObject.update(query, "Lerato", "Mabitso", 1);
+                            jdbcTemplateObject.update(queries[i], "Lerato", "Mabitso", 1);
 
-                        } else if (query.matches("[DELETE]")) {
+                        } else if (i==4) {
 
-                            jdbcTemplateObject.update(query, 2);
+                             jdbcTemplateObject.update(queries[i], 2);
 
-                        } else if (query.matches("[COUNT]")) {
+                        }  else if(i==5) {
 
-                            System.out.println(resultSet.getInt(1));
-                        } else {
+                             jdbcTemplateObject.update(queries[i]);
+
+                         }
+
+                         else {
 
                             System.out.println(resultSet.getInt(1));
                         }
-                    }
+
                 }
             }
 
